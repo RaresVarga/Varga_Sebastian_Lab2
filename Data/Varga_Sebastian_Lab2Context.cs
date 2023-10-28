@@ -17,5 +17,9 @@ namespace Varga_Sebastian_Lab2.Data
         public DbSet<Varga_Sebastian_Lab2.Models.Book> Book { get; set; } = default!;
 
         public DbSet<Varga_Sebastian_Lab2.Models.Publisher>? Publisher { get; set; }
+
+        public DbSet<Varga_Sebastian_Lab2.Models.Author>? Author { get; set; }
+
+        public DbSet<Varga_Sebastian_Lab2.Models.Category>? Category { get; set; }
     }
 }
