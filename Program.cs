@@ -1,12 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Varga_Sebastian_Lab2.Data;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Varga_Sebastian_Lab2Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Varga_Sebastian_Lab2Context") ?? throw new InvalidOperationException("Connection string 'Varga_Sebastian_Lab2Context' not found.")));
+
+builder.Services.AddDbContext<IdentityContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Varga_Sebastian_Lab2Context") ?? throw new InvalidOperationException("Connection string 'Varga_Sebastian_Lab2Context' not found.")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<IdentityContext>();
 
 var app = builder.Build();
 
@@ -22,6 +29,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
